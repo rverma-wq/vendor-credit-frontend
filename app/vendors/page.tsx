@@ -8,6 +8,10 @@ import axios from "axios";
 export default function VendorsPage() {
     const [vendors, setVendors] = useState<any[]>([]);
 
+    const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://127.0.0.1:8000";
+
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
@@ -29,7 +33,7 @@ export default function VendorsPage() {
     const createCreditNote = async () => {
         try {
           await axios.post(
-            "http://127.0.0.1:8000/credit-notes",
+            `${API_URL}/credit-notes`,
             {
               vendor_id: selectedVendorId,
               purchase_amount: Number(purchaseAmount),
@@ -52,7 +56,7 @@ export default function VendorsPage() {
     const fetchVendors = async () => {
         try {
             const response = await axios.get(
-                "http://127.0.0.1:8000/vendors"
+                `${API_URL}/vendors`
             );
 
             setVendors(response.data);
@@ -63,7 +67,7 @@ export default function VendorsPage() {
     const addVendor = async () => {
         try {
             await axios.post(
-                "http://127.0.0.1:8000/vendors",
+                `${API_URL}/vendors`,
                 {
                     name,
                     phone,
@@ -83,7 +87,7 @@ export default function VendorsPage() {
     const deleteVendor = async (vendorId: number) => {
         try {
             await axios.delete(
-                `http://127.0.0.1:8000/vendors/${vendorId}`
+                `${API_URL}/vendors/${vendorId}`
             );
 
             fetchVendors();
