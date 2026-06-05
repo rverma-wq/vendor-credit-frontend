@@ -10,18 +10,23 @@ export default function CreditNotesPage() {
     fetchCreditNotes();
   }, []);
 
+  
+  const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://127.0.0.1:8000";
+
+
   const fetchCreditNotes = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/credit-notes"
+        `${API_URL}/credit-notes`
       );
-
+  
       setCreditNotes(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-
   const totalPurchase = creditNotes.reduce(
     (sum, note) => sum + note.purchase_amount,
     0
